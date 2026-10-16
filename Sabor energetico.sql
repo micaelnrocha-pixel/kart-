@@ -51,9 +51,47 @@ INSERT INTO pilotos (nome, cpf, telefone, data_nascimento) VALUES
 ('Roberto Lima', '333.444.555-66', '41-97777-4444', '1997-04-10');
 
 INSERT INTO reservas (id_piloto, id_baterias, id_kart) VALUES
-(1.2,1),
+(1,2,1),
 (2,3,2),
 (3,1,3);
 
+SELECT
+pilotos.nome,
+baterias.nome,
+karts.numero
+FROM reservas
+INNER JOIN pilotos ON reservas.id_piloto = pilotos.id_piloto
+INNER JOIN baterias ON reservas.id_baterias = baterias.id_baterias
+INNER JOIN karts ON reservas.id_kart = karts.id_kart
+WHERE pilotos.nome = 'Carlos Silva';
 
+SELECT
+pilotos.nome,
+reservas.data_corrida,
+reservas.status
+FROM reservas
+INNER JOIN pilotos ON reservas.id_piloto = pilotos.id_piloto;
 
+SELECT
+baterias.nome,
+baterias.valor,
+reservas.data_corrida
+FROM reservas
+INNER JOIN baterias ON reservas.id_baterias = baterias.id_baterias
+ORDER BY baterias. valor DESC;
+
+SELECT
+pilotos.nome,
+karts.numero,
+karts.categoria
+FROM reservas
+INNER JOIN pilotos ON reservas.id_piloto = pilotos.id_piloto
+INNER JOIN karts ON reservas.id_kart = karts.id_kart
+WHERE karts.categoria = 'Rental Padrao';
+
+SELECT
+baterias.nome,
+COUNT(reservas.id_reserva) AS total_reservas
+FROM baterias
+INNER JOIN reservas ON baterias.id_baterias = reservas.id_baterias
+GROUP BY baterias.id_baterias, baterias.nome;
